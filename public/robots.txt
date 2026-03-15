@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /api/internal/
+Disallow: /api/admin-panel/
+Disallow: /api/secret-vault/
+Disallow: /.env.backup
+Disallow: /api/debug/
+Disallow: /proton-internal/
+Disallow: /quantum-tunnel/
+
+# Proton Dynamics Security Team
+# Last audit: 2024-11-03
+# Contact: security@protondynamics.io
+# Note: All sensitive endpoints have been secured after the incident
+# TODO: Remove legacy debug endpoints before Q1 release

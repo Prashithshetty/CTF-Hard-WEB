@@ -1,0 +1,13 @@
+{
+  "name": "proton-dynamics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proton Dynamics Corporate Portal",
+  "scripts": {
+    "dev": "npx vercel dev --listen 3000"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "nunjucks": "^3.2.4"
+  }
+}

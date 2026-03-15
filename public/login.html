@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proton Dynamics | Admin Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!--
+    Proton Admin Portal v2.4.0
+    Backend: PostgreSQL 14 + Express.js
+    Auth: JWT-based session management
+    TODO: Patch SQL injection in login handler (JIRA: PRT-SEC-0847)
+    HACKFAST{sql_1nj3ct10n_w0nt_h3lp_y0u_h3r3}
+  -->
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <div class="logo-icon">P</div>
+            Proton Dynamics
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">Admin Portal</h1>
+            <p class="login-subtitle">Proton Systems — Authorized Personnel Only</p>
+
+            <form id="loginForm" autocomplete="off">
+                <div class="form-group">
+                    <label class="form-label" for="username">Employee ID</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="PRT-EMP-XXX"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Passkey</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter passkey"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary login-btn">
+                    Authenticate
+                </button>
+                <div id="loginError" class="login-error"></div>
+            </form>
+
+            <!-- Fake SQL error messages to waste time -->
+            <div id="sqlDebug"
+                style="display:none;margin-top:1rem;padding:0.5rem;background:rgba(255,51,102,0.05);border-radius:4px;">
+                <pre style="font-size:0.65rem;color:#ff3366;white-space:pre-wrap;"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Proton Auth Module v2.4.0
+        // Backend validation against proton_users table
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const sqlDebug = document.getElementById('sqlDebug');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            loginError.style.display = 'none';
+            sqlDebug.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (data.error) {
+                    loginError.textContent = data.error;
+                    loginError.style.display = 'block';
+
+                    // "Accidentally" show SQL debug info on certain inputs
+                    if (data.debug) {
+                        sqlDebug.style.display = 'block';
+                        sqlDebug.querySelector('pre').textContent = data.debug;
+                    }
+                } else if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            } catch (err) {
+                loginError.textContent = 'Connection to Proton Auth Server failed.';
+                loginError.style.display = 'block';
+            }
+        });
+
+        // Fake console breadcrumb
+        console.log('%c[PROTON AUTH] Module loaded. Backend: proton-auth-svc-03.internal', 'color: #00d4ff');
+        console.log('%c[PROTON AUTH] Session validation endpoint: /api/validate-session', 'color: #576574');
+        console.warn('[PROTON AUTH] Debug mode ENABLED — disable before production deployment');
+        console.log('%c[PROTON AUTH] DB connection pool: 12/50 active', 'color: #00ff88');
+    </script>
+</body>
+
+</html>

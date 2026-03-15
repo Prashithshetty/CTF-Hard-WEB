@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proton Dynamics | Systems Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!--
+    Proton Dashboard v1.9.3
+    Data source: Proton Core Telemetry API
+    Refresh interval: 30s
+    
+    NOTE: Some widgets display encrypted telemetry data.
+    Decryption requires OMEGA clearance and the Proton Master Key.
+    See /api/decrypt endpoint for authorized decryption.
+    
+    HACKFAST{d4shb0ard_1s_4_d34d_3nd}
+  -->
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <div class="logo-icon">P</div>
+            Proton Dynamics
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Admin Portal</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard">
+        <div class="dash-header">
+            <h1 class="dash-title">Proton Systems Dashboard</h1>
+            <span class="dash-user">Guest Access — Limited View</span>
+        </div>
+
+        <div class="dash-grid">
+            <!-- Metric widgets with real-looking but fake data -->
+            <div class="dash-widget">
+                <h3 class="dash-widget-title">Proton Core Throughput</h3>
+                <div class="dash-metric">2.41B</div>
+                <div class="dash-metric-label">particles/second</div>
+            </div>
+
+            <div class="dash-widget">
+                <h3 class="dash-widget-title">Field Array Status</h3>
+                <div class="dash-metric" style="color: var(--proton-success);">98.7%</div>
+                <div class="dash-metric-label">coherence level</div>
+            </div>
+
+            <div class="dash-widget">
+                <h3 class="dash-widget-title">Active Experiments</h3>
+                <div class="dash-metric">47</div>
+                <div class="dash-metric-label">running on Proton Core</div>
+            </div>
+
+            <div class="dash-widget">
+                <h3 class="dash-widget-title">Beam Energy</h3>
+                <div class="dash-metric">13.6</div>
+                <div class="dash-metric-label">TeV center-of-mass</div>
+            </div>
+
+            <!-- Encrypted data widget — bait for /api/decrypt -->
+            <div class="dash-widget" data-widget-id="encrypted-telemetry" data-requires-clearance="omega">
+                <h3 class="dash-widget-title">🔒 Encrypted Telemetry — Omega Clearance Required</h3>
+                <div class="encrypted-data" id="encryptedBlock1">
+                    4a6f7920446976697369696f6e2053797374656d204c6f673a0a
+                    50726f746f6e20436f726520456e67696e65206469616720636865
+                    636b20636f6d706c6574652e0a416c6c206669656c647320737461
+                    626c652e0a0a466c61673a204841434b464153547b6e30705f7468
+                    31735f31735f6a7573745f6834785f6e3074685f6e677d0a0a454f
+                </div>
+                <p style="font-size:0.7rem;color:var(--proton-text-dim);margin-top:0.75rem;">
+                    Use <code>/api/decrypt</code> with the Proton Master Key to decode.
+                </p>
+            </div>
+
+            <!-- Another encrypted block -->
+            <div class="dash-widget" data-widget-id="internal-logs" data-requires-clearance="gamma">
+                <h3 class="dash-widget-title">🔒 Internal System Logs</h3>
+                <div class="encrypted-data" id="encryptedBlock2">
+                    2d2d2d2d2d20504f524f544f4e20494e5445524e414c204c4f47
+                    202d2d2d2d2d0a54696d657374616d703a20323032342d31312d
+                    31355430383a32333a34375a0a4576656e743a2050726f746f6e20
+                    6669656c6420616e6f6d616c7920696e20736563746f72203747
+                </div>
+                <p style="font-size:0.7rem;color:var(--proton-text-dim);margin-top:0.75rem;">
+                    Requires internal VPN and GAMMA+ clearance to view.
+                </p>
+            </div>
+
+            <!-- Fake API key widget -->
+            <div class="dash-widget">
+                <h3 class="dash-widget-title">API Access</h3>
+                <div style="font-size:0.8rem;color:var(--proton-text-dim);">
+                    <p>Public API Key:</p>
+                    <code style="color:var(--proton-accent);font-size:0.75rem;word-break:break-all;">
+            prt_pub_7f4a8b2c9e1d3f5a6b7c8d9e0f1a2b3c
+          </code>
+                    <p style="margin-top:0.5rem;font-size:0.7rem;">
+                        For privileged access, authenticate via <a href="/login"
+                            style="color:var(--proton-accent);">/login</a>
+                        and use the session token as Bearer auth.
+                    </p>
+                </div>
+            </div>
+
+            <!-- GraphQL bait -->
+            <div class="dash-widget">
+                <h3 class="dash-widget-title">Developer Tools</h3>
+                <div style="font-size:0.8rem;color:var(--proton-text-dim);">
+                    <p>Available endpoints:</p>
+                    <ul style="list-style:none;margin-top:0.5rem;font-size:0.75rem;">
+                        <li style="margin-bottom:0.3rem;">• <code
+                                style="color:var(--proton-accent);">/api/graphql</code> — Query interface</li>
+                        <li style="margin-bottom:0.3rem;">• <code style="color:var(--proton-accent);">/api/flag</code> —
+                            CTF endpoint</li>
+                        <li style="margin-bottom:0.3rem;">• <code style="color:var(--proton-accent);">/api/backup</code>
+                            — Config backup</li>
+                        <li style="margin-bottom:0.3rem;">• <code style="color:var(--proton-accent);">/api/ws</code> —
+                            WebSocket feed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden: fake session data -->
+        <div id="__PROTON_SESSION_DATA__" style="display:none"
+            data-session="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiZ3Vlc3QiLCJjbGVhcmFuY2UiOiJub25lIiwiZmxhZyI6IkhBQ0tGQVNUe2p3dF9kM2MwZDNfZDFkbnRfd29ya30ifQ.FAKE_SIGNATURE_HERE"
+            data-refresh-token="prt_refresh_ALSO_FAKE_0000000000">
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-text">Proton Dynamics — Telemetry Dashboard v1.9.3</p>
+        <p class="footer-text">Data refreshes every 30 seconds from Proton Core API.</p>
+    </footer>
+
+    <script>
+        // Proton Dashboard Telemetry Module
+        // Auto-refresh telemetry data from Proton Core API
+
+        // Fake console breadcrumbs
+        console.log('%c[PROTON DASH] Dashboard initialized', 'color: #00d4ff');
+        console.log('%c[PROTON DASH] Telemetry source: wss://telemetry.protondynamics.internal:8443', 'color: #576574');
+        console.log('%c[PROTON DASH] Guest session — limited to public metrics only', 'color: #ffaa00');
+        console.log('%c[PROTON DASH] For full access, authenticate at /login', 'color: #576574');
+        console.log('%c[PROTON DASH] Debug: session token loaded from cookie "prt_session"', 'color: #576574');
+
+        // Fake metric animation to make it look alive
+        function animateMetrics() {
+            const metrics = document.querySelectorAll('.dash-metric');
+            metrics.forEach(metric => {
+                const original = metric.textContent;
+                const num = parseFloat(original);
+                if (!isNaN(num)) {
+                    const variation = num + (Math.random() - 0.5) * num * 0.01;
+                    if (original.includes('B')) {
+                        metric.textContent = variation.toFixed(2) + 'B';
+                    } else if (original.includes('%')) {
+                        metric.textContent = Math.min(99.9, variation).toFixed(1) + '%';
+                    } else if (num > 10) {
+                        metric.textContent = Math.round(variation);
+                    }
+                }
+            });
+        }
+        setInterval(animateMetrics, 3000);
+
+        // Fake WebSocket connection attempt (visible in Network tab)
+        try {
+            console.log('%c[PROTON DASH] Attempting WebSocket connection to telemetry feed...', 'color: #576574');
+            // This will fail but show up in network tab as a clue
+            // const ws = new WebSocket('wss://telemetry.protondynamics.internal:8443');
+        } catch (e) {
+            console.error('[PROTON DASH] WebSocket connection failed — falling back to REST polling');
+        }
+    </script>
+</body>
+
+</html>
