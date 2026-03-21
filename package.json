@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
-    "nunjucks": "^3.2.4"
+    "nunjucks": "^3.2.4",
+    "vercel": "^50.32.5"
   }
 }

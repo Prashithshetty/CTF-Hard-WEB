@@ -1,5 +1,6 @@
 // Proton Dynamics — Data Decryption Service
-// Fake decrypt endpoint
+// Provides cryptographic services for internal research data.
+
 
 module.exports = (req, res) => {
     const { data, key, algorithm } = req.body || {};

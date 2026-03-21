@@ -1,15 +1,12 @@
 // Proton Dynamics — Event Horizon Monitor
-// REAL VULNERABILITY: Server-Side Template Injection (SSTI) via Nunjucks
-//
-// Step 1: Player must include X-Proton-Decay header
-// Step 2: Player must exploit SSTI in the ?query= parameter
-//   - Nunjucks template engine renders user input unsafely
-//   - Payload: {{process.env.CTF_FLAG}} extracts the flag from env var
+// This component monitors proton decay signatures and field anomalies.
+// Access requires X-Proton-Decay authorization.
 
 const nunjucks = require('nunjucks');
 
-// Configure nunjucks — intentionally unsafe (no sandboxing)
+// Configure template environment for PQL (Proton Query Language) processing
 const env = new nunjucks.Environment(null, { autoescape: false });
+
 
 module.exports = (req, res) => {
     // Must have X-Proton-Decay header

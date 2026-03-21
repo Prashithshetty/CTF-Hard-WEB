@@ -1,5 +1,6 @@
 // Proton Dynamics — GraphQL Interface
-// Fake GraphQL endpoint with introspection
+// Unified query gateway for internal data exploration and system metrics.
+
 
 module.exports = (req, res) => {
     const body = req.body || {};

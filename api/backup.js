@@ -1,11 +1,12 @@
 // Proton Dynamics — Configuration Backup
-// Fake .env.backup endpoint
+// Internal system configuration backup and environment snapshots.
+
 
 module.exports = (req, res) => {
   // Make it look like an accidentally exposed backup file
   res.setHeader('Content-Type', 'text/plain');
   res.setHeader('X-Proton-Warning', 'This endpoint is deprecated and scheduled for removal');
-  
+
   res.status(200).send(`# Proton Dynamics — Environment Configuration Backup
 # Generated: 2024-09-15T14:32:07Z
 # Server: proton-web-07.internal.protondynamics.io

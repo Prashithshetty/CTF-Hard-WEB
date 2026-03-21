@@ -1,5 +1,6 @@
 // Proton Dynamics — Admin Authentication
-// Fake SQL injection vulnerability
+// Handles employee authentication and access control.
+
 
 module.exports = (req, res) => {
   if (req.method !== 'POST') {
@@ -9,7 +10,7 @@ module.exports = (req, res) => {
   const { username, password } = req.body || {};
 
   if (!username || !password) {
-    return res.status(400).json({ 
+    return res.status(400).json({
       error: 'Missing credentials',
       debug: null
     });

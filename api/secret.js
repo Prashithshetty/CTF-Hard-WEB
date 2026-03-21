@@ -1,5 +1,6 @@
 // Proton Dynamics — Secret Vault
-// Another fake flag endpoint that looks more "hidden"
+// Restricted access to high-clearance research credentials and master keys.
+
 
 module.exports = (req, res) => {
     const auth = req.headers['authorization'];

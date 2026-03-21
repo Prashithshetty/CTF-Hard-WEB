@@ -1,10 +1,11 @@
 // Proton Dynamics — Flag Endpoint
-// "Easy" flag endpoint — this is a trap
+// System status and diagnostic entry point.
+
 
 module.exports = (req, res) => {
   // Add fake delay to make it feel like it's doing something
   const methods = ['GET', 'POST', 'PUT'];
-  
+
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -14,7 +15,7 @@ module.exports = (req, res) => {
 
   // Easter egg: if they send Authorization header, give them a slightly different fake flag
   const auth = req.headers['authorization'];
-  
+
   if (auth) {
     return res.status(200).json({
       status: 'authenticated',
@@ -33,7 +34,7 @@ module.exports = (req, res) => {
     hint: 'This was too easy, wasn\'t it? The real flag is hidden deeper.',
     proton_tip: 'The Proton Core team hides things well. Look harder.',
     endpoints: {
-      admin: '/api/login', 
+      admin: '/api/login',
       secret: '/api/secret',
       backup: '/api/backup',
       debug: '/api/graphql'

@@ -1,5 +1,6 @@
 // Proton Dynamics — WebSocket Telemetry Feed
-// Fake WS endpoint that returns cryptic encoded messages
+// Real-time particle interaction stream and system telemetry.
+
 
 module.exports = (req, res) => {
     // Can't do real WebSocket on Vercel serverless, so fake it

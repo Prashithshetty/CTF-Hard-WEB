@@ -1,13 +1,7 @@
 // Proton Dynamics — Proton Core Engine API
-// REAL VULNERABILITY: JWT validation + Prototype Pollution
-// 
-// Step 1: Player must send a valid JWT in ?session= param
-//   - Algorithm: HS256  
-//   - Secret: "proton"
-//   - Required payload: { role: "engineer", clearance: "omega" }
-//
-// Step 2: Player must exploit prototype pollution via __proto__ in JSON body
-//   - Polluting { isAdmin: true } reveals the hidden event-horizon path
+// This API provides access to real-time particle interaction data and system diagnostics.
+// Authentication is required via session tokens.
+
 
 const jwt = require('jsonwebtoken');
 
@@ -90,6 +84,7 @@ module.exports = (req, res) => {
 
     // Create a fresh object and merge user input into it
     const config = {};
+    const originalProtoKeys = Object.getOwnPropertyNames(Object.prototype);
     unsafeMerge(config, body);
 
     // Build response
@@ -127,7 +122,13 @@ module.exports = (req, res) => {
     }
 
     // Clean up prototype pollution to not affect other requests
-    delete Object.prototype.isAdmin;
+    // Remove all polluted keys to prevent Denial of Service on serverless functions
+    const currentProtoKeys = Object.getOwnPropertyNames(Object.prototype);
+    for (const key of currentProtoKeys) {
+        if (!originalProtoKeys.includes(key)) {
+            delete Object.prototype[key];
+        }
+    }
 
     res.status(200).json(response);
 };

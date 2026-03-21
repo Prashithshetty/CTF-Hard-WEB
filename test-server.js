@@ -1,6 +1,6 @@
-// Lightweight local test server — NOT deployed to Vercel
-// Usage: node test-server.js
-// This mimics Vercel's serverless function routing for local testing
+// Proton Dynamics — Internal Development Server
+// Local emulation of Vercel serverless environment.
+
 
 const http = require('http');
 const fs = require('fs');
